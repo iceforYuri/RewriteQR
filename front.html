@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>二维码有效期延展器</title>
+    <link rel="stylesheet" href="front.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.0.0/dist/jsQR.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="panel left-panel">
+        <h1>二维码有效期延展</h1>
+        <p>上传二维码图片，将其有效期延长一小时。</p>
+        <input
+          type="file"
+          id="qr-file-input"
+          class="file-input"
+          accept="image/*"
+        />
+        <button id="upload-btn" class="btn-upload">选择二维码文件</button>
+      </div>
+      <div class="panel right-panel" id="right-panel">
+        <p>处理结果将在这里显示...</p>
+      </div>
+    </div>
+
+    <script src="base_script.js"></script>
+  </body>
+</html>

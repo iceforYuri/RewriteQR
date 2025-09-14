@@ -1,0 +1,115 @@
+/* front.css */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 900px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.panel {
+    flex: 1;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.left-panel {
+    border-right: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.btn-upload {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-upload:hover {
+    background-color: #0056b3;
+}
+
+.file-input {
+    display: none;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 400px;
+}
+
+.qr-image {
+    width: 260px;
+    height: 260px;
+    object-fit: contain;
+    margin-top: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.error {
+    color: #fff;
+    background-color: #e74c3c;
+}
+
+.success {
+    color: #fff;
+    background-color: #2ecc71;
+}
+
+.deadline {
+    margin-top: 15px;
+    color: #555;
+    font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-panel {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+    }
+}
