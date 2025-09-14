@@ -9,20 +9,63 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
   </head>
   <body>
-    <div class="container">
+    <div class="app-container">
       <div class="panel left-panel">
-        <h1>二维码有效期延展</h1>
-        <p>上传二维码图片，将其有效期延长一小时。</p>
-        <input
-          type="file"
-          id="qr-file-input"
-          class="file-input"
-          accept="image/*"
-        />
-        <button id="upload-btn" class="btn-upload">选择二维码文件</button>
+        <div class="intro-content">
+          <h1>二维码有效期延展器</h1>
+          <p class="subtitle">智能延长，保障您的远程签到</p>
+
+          <!-- <div class="intro-image-placeholder"></div> -->
+
+          <img
+            src="./src/images/xhs.jpg"
+            alt="slowly"
+            class="intro-image"
+            width="400"
+            height="250"
+          />
+
+          <div class="intro-text">
+            <p>
+              当您面对短暂有效的动态签到码时，是否曾因错过时间而困扰？本工具利用前端技术，巧妙地解析并修改二维码中的时间参数，为您生成一个有效期延长的全新二维码，确保您在任何地点都能轻松完成签到。
+            </p>
+            <p>
+              我们承诺，所有操作均在本地浏览器中完成，您的文件和数据不会上传至任何服务器，充分保护您的隐私安全。这不仅仅是一个工具，更是对技术边界的一次探索。
+            </p>
+            <div class="intro-stats">
+              <p>
+                <strong>已服务人数：<span id="service-count">132</span></strong>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="panel right-panel" id="right-panel">
-        <p>处理结果将在这里显示...</p>
+
+      <div class="panel right-panel">
+        <h2>转换器</h2>
+        <p class="description">
+          选择二维码图片（JPG/PNG格式），我们将自动识别并生成新的静态二维码。
+        </p>
+
+        <div class="upload-area" id="upload-area">
+          <span class="upload-icon">&#x2191;</span>
+          <span class="upload-text">点击或拖拽文件到此上传</span>
+          <input
+            type="file"
+            id="qr-file-input"
+            class="file-input"
+            accept="image/*"
+          />
+        </div>
+
+        <div class="status-area" id="status-area">
+          <div class="qr-placeholder" id="qr-placeholder">
+            处理结果将在此显示...
+          </div>
+        </div>
+
+        <div id="message-container"></div>
+        <div id="deadline-display"></div>
       </div>
     </div>
 
