@@ -48,6 +48,8 @@ body::after {
     /* overflow: hidden; */
     position: relative;
     z-index: 1;
+    animation: slideInUp 0.8s ease-out forwards;
+        /* 0.8秒动画，结束后保持状态 */
 }
 
 .panel {
@@ -70,11 +72,39 @@ body::after {
 
 .intro-content {
     /* 移除此处的 display:flex，它会与 .panel 的样式冲突 */
-    display: flex;
+    /* display: flex; */
     /* 确保内容依然是flex布局 */
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
+    /* 针对 intro-content 的所有直接子元素 */
+        opacity: 0;
+        /* 初始隐藏 */
+        animation: fadeIn 0.6s ease-out forwards;
+}
+/* 为左侧面板的子元素设置延迟，实现依次渐显 */
+.intro-content h1 {
+    animation-delay: 0.3s;
+}
+
+.intro-content .subtitle {
+    animation-delay: 0.4s;
+}
+
+.intro-content .intro-image-placeholder {
+    animation-delay: 0.5s;
+}
+
+.intro-content .intro-text p:nth-of-type(1) {
+    animation-delay: 0.6s;
+}
+
+.intro-content .intro-text p:nth-of-type(2) {
+    animation-delay: 0.7s;
+}
+
+.intro-content .intro-stats {
+    animation-delay: 0.8s;
 }
 
 
@@ -125,6 +155,38 @@ h1 {
     /* 移除 display、flex-direction、justify-content、align-items，因为它们已合并到 .panel 中 */
     background-color: rgba(255, 255, 255, 0.85);
     border-radius: 0 12px 12px 0;
+}
+/* 应用到右侧面板的主要内容 */
+.right-panel>* {
+    /* 针对 right-panel 的所有直接子元素 */
+    opacity: 0;
+    /* 初始隐藏 */
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* 为右侧面板的子元素设置延迟，实现依次渐显 */
+.right-panel h2 {
+    animation-delay: 0.9s;
+}
+
+.right-panel .description {
+    animation-delay: 1.0s;
+}
+
+.right-panel .upload-area {
+    animation-delay: 1.1s;
+}
+
+.right-panel .status-area {
+    animation-delay: 1.2s;
+}
+
+.right-panel #message-container {
+    animation-delay: 1.3s;
+}
+
+.right-panel #deadline-display {
+    animation-delay: 1.4s;
 }
 
 .right-panel h2 {
@@ -280,5 +342,31 @@ h1 {
         border-right: none;
         border-bottom: 1px solid #e0e0e0;
         padding-bottom: 20px;
+    }
+}
+
+/* ------------------- 页面载入动画 ------------------- */
+
+/* 定义整个卡片入场动画 */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 定义内容渐显动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
