@@ -453,7 +453,73 @@ h2:active {
     transition: all 0.3s ease;
 }
 
+.mail-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 14px 4px 10px;
+    margin: 0 4px;
+    font-weight: bold;
+    font-size: 1em;
+    color: #fff;
+    background: linear-gradient(90deg,
+        #33befa 100%,
+        #105cff 0%);
+    border: none;
+    border-radius: 20px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(70, 130, 180, 0.08);
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    outline: none;
+}
 
+.mail-btn:hover,
+.mail-btn:focus {
+    background: linear-gradient(90deg, #105cff 0%, #33befa 100%);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(70, 130, 180, 0.15);
+    color: #fff;
+    text-decoration: none;
+}
+
+.mail-icon {
+    margin-right: 4px;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+}
+
+.github-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px 3px 10px;
+    margin: 0 4px;
+    font-weight: bold;
+    font-size: 1em;
+    color: #fff;
+    background: linear-gradient(90deg, #4ecdc4 0%, #45b7d1 100%);
+    border: none;
+    border-radius: 20px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(70, 130, 180, 0.08);
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    outline: none;
+}
+
+.github-btn:hover,
+.github-btn:focus {
+    background: linear-gradient(90deg, #45b7d1 0%, #4ecdc4 100%);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(70, 130, 180, 0.15);
+    color: #fff;
+    text-decoration: none;
+}
+
+.github-icon {
+    margin-right: 4px;
+    vertical-align: middle;
+}
 
 /* ------------------- 页面载入动画 ------------------- */
 
