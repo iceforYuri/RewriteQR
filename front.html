@@ -47,25 +47,24 @@
           选择二维码图片（JPG/PNG格式），我们将自动识别并生成新的静态二维码。
         </p>
 
-        <div class="upload-area" id="upload-area">
+        <label for="qr-file-input" class="upload-area" id="upload-area">
           <span class="upload-icon">&#x2191;</span>
           <span class="upload-text">点击或拖拽文件到此上传</span>
-          <input
-            type="file"
-            id="qr-file-input"
-            class="file-input"
-            accept="image/*"
-          />
-        </div>
+        </label>
+        <input
+          type="file"
+          id="qr-file-input"
+          class="file-input"
+          accept="image/*"
+        />
 
         <div class="status-area" id="status-area">
           <div class="qr-placeholder" id="qr-placeholder">
-            处理结果将在此显示...
+            <p>处理结果将在此显示...</p>
           </div>
         </div>
 
         <div id="message-container"></div>
-        <div id="deadline-display"></div>
       </div>
     </div>
 

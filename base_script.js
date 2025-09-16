@@ -4,13 +4,10 @@
 
 // 假设我们有如下 DOM 元素用于交互和显示结果
 const fileInput = document.getElementById("qr-file-input");
-const rightPanel = document.getElementById("right-panel");
-const uploadButton = document.getElementById("upload-btn");
-
-// 绑定事件：点击按钮触发文件选择
-uploadButton.addEventListener("click", () => {
-  fileInput.click();
-});
+const uploadArea = document.getElementById("upload-area");
+const statusArea = document.getElementById("status-area");
+const messageContainer = document.getElementById("message-container");
+const qrPlaceholder = document.getElementById("qr-placeholder");
 
 // 绑定事件：文件选择后触发处理流程
 fileInput.addEventListener("change", extendQRCodeDeadline);
@@ -19,7 +16,7 @@ async function extendQRCodeDeadline() {
   // 1. 获取用户上传的文件
   const file = fileInput.files[0];
   if (!file) {
-    showError("请先选择一个二维码文件");
+    // 如果用户取消了文件选择，则不执行任何操作
     return;
   }
 
@@ -35,18 +32,18 @@ async function extendQRCodeDeadline() {
       return;
     }
 
-    // 3. 核心逻辑：修改文本内容
+    // 3. 核心逻辑：尝试修改文本内容
     const modifiedText = modifyCreateTime(originalText);
-    if (modifiedText === originalText) {
-      showError("未检测到可修改的createTime参数");
-      return;
-    }
 
-    // 4. 重新生成并显示二维码
+    // 4. 重新生成并显示二维码（无论内容是否被修改）
     await generateQRCode(modifiedText);
 
-    // 5. 任务完成，展示成功信息
-    displaySuccess("成功生成新的二维码！");
+    // 5. 根据是否修改成功，展示不同的成功信息
+    if (modifiedText !== originalText) {
+      displaySuccess("成功延长有效期！");
+    } else {
+      displaySuccess("已重新生成二维码（未修改时间）");
+    }
   } catch (error) {
     // 6. 统一的错误处理
     showError(`处理失败：${error.message}`);
@@ -72,20 +69,29 @@ function readFileAsync(file) {
 /**
  * 模块2: 二维码解码服务
  * 利用 Canvas 和 jsQR 解码二维码
+ * 支持高分辨率、大尺寸、透明 PNG、webp/gif
  * @param {string} imageDataUrl
  * @returns {Promise<string|null>}
  */
 function decodeQRCode(imageDataUrl) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const image = new Image();
+    image.crossOrigin = "Anonymous"; // 解决跨域/透明问题
     image.src = imageDataUrl;
 
     image.onload = () => {
+      // 对大尺寸图片缩放，保持性能
+      const maxSize = 1024;
+      let scale = 1;
+      if (image.width > maxSize || image.height > maxSize) {
+        scale = Math.min(maxSize / image.width, maxSize / image.height);
+      }
+
       const canvas = document.createElement("canvas");
+      canvas.width = image.width * scale;
+      canvas.height = image.height * scale;
       const ctx = canvas.getContext("2d");
-      canvas.width = image.width;
-      canvas.height = image.height;
-      ctx.drawImage(image, 0, 0);
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
       try {
         // jsQR 库需要通过 CDN 或包管理器引入
@@ -94,11 +100,11 @@ function decodeQRCode(imageDataUrl) {
         resolve(code ? code.data : null);
       } catch (err) {
         // 捕获 jsQR 库可能抛出的异常
-        reject(new Error("二维码解码失败"));
+        resolve(null);
       }
     };
 
-    image.onerror = () => reject(new Error("图片加载失败"));
+    image.onerror = () => resolve(null);
   });
 }
 
@@ -143,14 +149,13 @@ function generateQRCode(text) {
         reject(new Error("二维码生成失败"));
         return;
       }
-      // 清理旧的二维码并显示新的
-      const oldQR = document.querySelector(".qr-image");
-      if (oldQR) oldQR.remove();
+      // 清理占位符并显示新的二维码
+      qrPlaceholder.style.display = "none";
 
       const qrImg = document.createElement("img");
       qrImg.classList.add("qr-image");
       qrImg.src = url;
-      rightPanel.appendChild(qrImg);
+      statusArea.appendChild(qrImg);
       resolve();
     });
   });
@@ -161,41 +166,51 @@ function generateQRCode(text) {
 // ----------------------------------------------------
 
 /**
- * 显示成功消息
- * @param {string} msg
+ * 清理上一次的结果
  */
 function clearResults() {
-  const messages = rightPanel.querySelectorAll(
-    ".message, .deadline, .qr-image"
-  );
-  messages.forEach((elem) => elem.remove());
-  rightPanel.innerHTML = "<p>处理结果将在这里显示...</p>";
+  // 清空消息
+  messageContainer.innerHTML = "";
+  // 移除旧的二维码和截止时间
+  const oldElements = statusArea.querySelectorAll(".qr-image, .deadline");
+  oldElements.forEach((elem) => elem.remove());
+  // 重新显示占位符
+  qrPlaceholder.style.display = "block";
+}
+
+/**
+ * 显示消息
+ * @param {string} msg
+ * @param {'success' | 'error'} type
+ */
+function showMessage(msg, type) {
+  let elem = document.createElement("div");
+  elem.classList.add("message", type);
+  elem.textContent = msg;
+  messageContainer.appendChild(elem);
+  setTimeout(() => {
+    if (elem.parentElement) {
+      elem.parentElement.removeChild(elem);
+    }
+  }, 3500);
 }
 
 function displaySuccess(msg) {
-  let elem = document.createElement("div");
-  elem.classList.add("message", "success");
-  elem.textContent = msg;
-  rightPanel.appendChild(elem);
-  setTimeout(() => elem.remove(), 3500);
+  showMessage(msg, "success");
 }
 
 function showError(msg) {
-  let elem = document.createElement("div");
-  elem.classList.add("message", "error");
-  elem.textContent = msg;
-  rightPanel.appendChild(elem);
-  setTimeout(() => elem.remove(), 3500);
+  showMessage(msg, "error");
 }
 
 function displayDeadline(deadlineText) {
   let deadlineElem = document.createElement("div");
   deadlineElem.classList.add("deadline");
   deadlineElem.textContent = `新的截止时间：${deadlineText}`;
-  rightPanel.appendChild(deadlineElem);
+  statusArea.appendChild(deadlineElem);
 }
 
 // （其他辅助函数如 showError, displayDeadline 保持不变）
 
 // 注册事件监听器
-fileInput.addEventListener("change", extendQRCodeDeadline);
+// fileInput.addEventListener("change", extendQRCodeDeadline); // 已在顶部定义
