@@ -110,8 +110,61 @@ body::after {
 
 h1 {
     font-size: 2em;
-    color: #1a2a3a;
     margin: 0 0 5px 0;
+    /* 渐变文字效果 */
+    background: linear-gradient(45deg, #44e47e, #4ecdc4, #45b7d1, #f9ca24, #f0932b, #eb7126, #6c5ce7);
+    background-size: 400% 400%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradientShift 3s ease infinite;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    /* 添加文字阴影增强视觉效果 */
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* 动态渐变动画 */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 鼠标悬停效果 */
+h1:hover {
+    transform: scale(1.05) translateY(-2px);
+    filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.2));
+    animation-duration: 1.5s;
+    /* 悬停时加快动画速度 */
+}
+
+/* 鼠标点击效果 */
+h1:active {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
+}
+
+/* 为了更好的兼容性，添加webkit前缀 */
+@supports (-webkit-background-clip: text) {
+    h1 {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    h2 {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 }
 
 .subtitle {
@@ -189,11 +242,37 @@ h1 {
     animation-delay: 1.4s;
 }
 
-.right-panel h2 {
-    font-size: 1.8em;
-    color: #1a2a3a;
-    margin: 0 0 10px 0;
-    background-color: rgba(255, 255, 255, 0.85);
+h2 {
+    font-size: 2em;
+        margin: 0 0 5px 0;
+        /* 渐变文字效果 */
+        background: linear-gradient(45deg, #44e47e, #4ecdc4, #45b7d1, #f9ca24, #f0932b, #eb7126, #6c5ce7);
+        background-size: 400% 400%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: gradientShift 3s ease infinite, fadeIn 0.6s ease-out forwards;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        /* 添加文字阴影增强视觉效果 */
+        filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+        /* 初始隐藏状态 */
+            opacity: 0;
+            animation-delay: 0.9s;
+}
+
+h2:hover {
+    transform: scale(1.05) translateY(-2px);
+    filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.2));
+    animation-duration: 1.5s;
+    /* 悬停时加快动画速度 */
+}
+
+h2:active {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
 }
 
 .description {
@@ -345,6 +424,37 @@ h1 {
     }
 }
 
+
+
+.main-idea {
+    margin-top: 20px;
+    padding: 15px 0;
+    border-top: 2px solid rgba(70, 130, 180, 0.2);
+}
+
+.main-idea p {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #4682B4;
+    /* 天蓝色 */
+    margin: 0;
+    text-align: left;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    /* 添加轻微的文字阴影增强可读性 */
+    text-shadow: 1px 1px 2px rgba(70, 130, 180, 0.1);
+}
+
+/* 鼠标悬停时的效果 */
+.main-idea p:hover {
+    color: #5A9FD4;
+    /* 稍微亮一点的天蓝色 */
+    transform: translateY(-1px);
+    transition: all 0.3s ease;
+}
+
+
+
 /* ------------------- 页面载入动画 ------------------- */
 
 /* 定义整个卡片入场动画 */
@@ -411,3 +521,5 @@ h1 {
     margin-top: 8px;
     margin-bottom: 0;
 }
+
+
