@@ -47,21 +47,28 @@
           选择二维码图片（JPG/PNG格式），我们将自动识别并生成新的静态二维码。
         </p>
 
-        <label for="qr-file-input" class="upload-area" id="upload-area">
+        <div class="upload-area" id="upload-area">
           <span class="upload-icon">&#x2191;</span>
           <span class="upload-text">点击或拖拽文件到此上传</span>
-        </label>
-        <input
-          type="file"
-          id="qr-file-input"
-          class="file-input"
-          accept="image/*"
-        />
+          <input
+            type="file"
+            id="qr-file-input"
+            class="file-input"
+            accept="image/*"
+          />
+        </div>
 
         <div class="status-area" id="status-area">
           <div class="qr-placeholder" id="qr-placeholder">
             <p>处理结果将在此显示...</p>
           </div>
+        </div>
+
+        <div class="analysis-section">
+          <button id="analysis-btn" class="analysis-btn" onclick="openAnalysisPage()">
+            🔍 批量分析二维码
+          </button>
+          <p class="analysis-desc">对比分析多个二维码的内容差异</p>
         </div>
 
         <div id="message-container"></div>
